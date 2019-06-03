@@ -30,13 +30,15 @@
        (fc/form-checkbox form "checkbox" "Basic checkbox" :on-change log-value)
        (fc/form-checkbox-group form "checkbox-group-one" checkbox-group-values :on-change log-value)
        (fc/form-checkbox-group form "checkbox-group-two" checkbox-group-values :on-change log-value)
+       (fc/form-checkbox-tabular-group form "checkbox-group-three" checkbox-group-values :on-change log-value)
        (fc/form-button form "Submit" validate-and-submit)])))
 
 (defonce form-state (reagent/atom {:checkbox true
-                                   :checkbox-group-one []
-                                   :checkbox-group-two ["harry"]
-                                   :email              "default-email"
-                                   :name               ""}))
+                                   :checkbox-group-one   []
+                                   :checkbox-group-two   ["harry"]
+                                   :checkbox-group-three ["william"]
+                                   :email                "default-email"
+                                   :name                 ""}))
 
 (defn basic-form-with-state []
   (let [state      form-state
@@ -49,6 +51,7 @@
          (fc/form-checkbox form "checkbox" "Basic checkbox")
          (fc/form-checkbox-group form "checkbox-group-one" checkbox-group-values :on-change (set-value! :checkbox-group-one) :initial-value (get-value :checkbox-group-one))
          (fc/form-checkbox-group form "checkbox-group-two" checkbox-group-values :on-change (set-value! :checkbox-group-two) :initial-value (get-value :checkbox-group-two))
+         (fc/form-checkbox-tabular-group form "checkbox-group-three" checkbox-group-values :on-change (set-value! :checkbox-group-three) :initial-value (get-value :checkbox-group-three))
          (fc/form-button form "Submit" validate-and-submit)]))))
 
 (defn view [params]

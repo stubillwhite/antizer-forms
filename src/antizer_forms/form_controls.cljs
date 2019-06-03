@@ -14,7 +14,7 @@
 ;; TODO: Defaults do not seem to be working for a single form checkbox. Possibly a bug?
 (defn form-checkbox
   "Return a checkbox for the form, where ID is the identifier for and
-  label is the label for the checkboxe. Optionally provide a function
+  label is the label for the checkbox. Optionally provide a function
   to call when the value is changed."
   [form id label & {:keys [on-change initial-value]
                     :or   {on-change     (fn [x])
@@ -36,6 +36,23 @@
      [ant/decorate-field form id {:initial-value initial-value}
       [ant/checkbox-group {:options  options
                            :onChange (fn [x] (on-change (js->clj x)))}]]]))
+
+(defn form-checkbox-tabular-group
+  "Return a tabular checkbox group for the form, where ID is the
+  identifier for the group, and labels is a seq of labels for the
+  checkboxes. Optionally provide a function to call when the value is
+  changed."
+  [form id labels & {:keys [initial-value on-change]
+                     :or   {initial-value []
+                            on-change     (fn [x])}}]
+  (let [options (map (fn [x] {:label x :value x}) labels)]
+    [ant/form-item {}
+     [ant/decorate-field form id {:initial-value initial-value}
+      [ant/checkbox-group {:style {:width "100%"}
+                           :onChange (fn [x] (on-change (js->clj x)))}
+       [ant/row
+        (for [x labels]
+          [ant/col {:span "12" :key x} [ant/checkbox {:value x} x]])]]]]))
 
 (defn form-input
   "Return an input field for the form with the specified ID and label.
