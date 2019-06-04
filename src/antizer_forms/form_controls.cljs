@@ -9,7 +9,7 @@
   [form label on-click]
   (let [submit #(do (.preventDefault %) (on-click form))]
     [ant/form-item {}
-     [ant/button {:type "primary" :on-click submit} label]]))
+     [ant/button {:id "submit-button" :type "primary" :on-click submit} label]]))
 
 ;; TODO: Defaults do not seem to be working for a single form checkbox. Possibly a bug?
 (defn form-checkbox
